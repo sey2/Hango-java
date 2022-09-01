@@ -1,0 +1,32 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="org.hango.com.Fragment1"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_1" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="org.hango.com.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="org.hango.com.Fragment1"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_1" />
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="org.hango.com.Fragment1"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_1" />
+
+</navigation>
