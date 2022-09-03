@@ -16,4 +16,13 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="Theme.HangGo.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HangGo.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.HangGo.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
