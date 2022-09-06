@@ -17,6 +17,7 @@
         android:theme="@style/Theme.HangGo"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config">
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="e6ee48ffe688d7e4c3afd97356d5e50c"/>
         <activity
             android:name=".login.RegisterActivity"
             android:exported="false" />
@@ -50,7 +51,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="e6ee48ffe688d7e4c3afd97356d5e50c"/>
     </application>
 
 </manifest>
