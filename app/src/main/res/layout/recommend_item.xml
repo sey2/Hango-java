@@ -18,24 +18,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_marginTop="120dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/back_1">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/backgroundImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                android:tint="#80000000"
+                android:tintMode="src_atop" />
 
             <TextView
                 android:id="@+id/cityTextView"
@@ -46,7 +40,7 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/abhayalibre_semibold"
                 android:text="제주도"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="10sp" />
 
             <TextView
@@ -58,7 +52,7 @@
                 android:layout_marginTop="17dp"
                 android:fontFamily="@font/abhayalibre_semibold"
                 android:text="세화해변"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="7sp" />
         </RelativeLayout>
 
