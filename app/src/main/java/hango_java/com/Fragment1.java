@@ -1,10 +1,13 @@
 package hango_java.com;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,15 +25,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Fragment1 extends Fragment {
 
-    protected RecyclerView todayRecycler, hotSpotRecycler, famousRecycler;
-    protected TravelAdapter todayAdapter, hotSpotAdapter, famousAdapter;
-   // final protected String URL = "https://korean.visitkorea.or.kr/list/ms_list.do?showcase=9월%20SNS%20인기%20여행지%20Top%2011&compid=85ea6b18-a2ca-486c-a21d-2a09e6562451";
+    protected RecyclerView todayRecycler,hotelRecycler, famousRecycler;
+    protected TravelAdapter todayAdapter, hotelAdapter, famousAdapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_1, container, false);
@@ -38,72 +42,25 @@ public class Fragment1 extends Fragment {
         todayAdapter = new TravelAdapter();
         todayRecycler = rootView.findViewById(R.id.todayRecycler);
         setAdapter(todayAdapter, todayRecycler);
-        loadData(container,todayAdapter);
+        loadData(container,todayAdapter, "areaBasedList","");
 
-        hotSpotAdapter = new TravelAdapter();
-        hotSpotRecycler = rootView.findViewById(R.id.hotRecycler);
-        setAdapter(hotSpotAdapter, hotSpotRecycler);
-        loadData(container, hotSpotAdapter);
+        hotelAdapter = new TravelAdapter();
+        hotelRecycler = rootView.findViewById(R.id.hotRecycler);
+        setAdapter(hotelAdapter, hotelRecycler);
+        loadData(container, hotelAdapter, "searchStay","");
+
+        LocalDate current_date = LocalDate.now();
+        String date[] = current_date.toString().split("-");
 
         famousAdapter = new TravelAdapter();
         famousRecycler = rootView.findViewById(R.id.famousRecycler);
         setAdapter(famousAdapter, famousRecycler);
-        loadData(container, famousAdapter);
+        loadData(container, famousAdapter, "searchFestival", date[0]+date[1]+date[2]);
 
         return rootView;
     }
 
-    public ArrayList<Travel> todayTravelLoadData(){
-        ArrayList<Travel> data = new ArrayList<>();
 
-       // data.add(new Travel("제주도","세화 해변", " http://tong.visitkorea.or.kr/cms/resource/78/1559578_image2_1.jpg"));
-        /*
-        data.add(new Travel("제주도", "아르떼 뮤지엄",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.back_3, null)));
-        data.add(new Travel("제주도", "태웃개",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.back_2, null)));
-        data.add(new Travel("제주도", "정월드",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.back_4, null)));
-
-         */
-
-
-        return data;
-    }
-
-    public ArrayList<Travel> hotTravelloadData(){
-        ArrayList<Travel> data = new ArrayList<>();
-
-        /*
-        data.add(new Travel("서울","잠실 롯데월드",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.hot_1, null)));
-        data.add(new Travel("전주", "한옥 마을",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.hot_2, null)));
-        data.add(new Travel("담양", "죽녹원",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.hot_3, null)));
-        data.add(new Travel("부산", "롯데월드",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.hot_4, null)));
-
-         */
-        return data;
-    }
-
-    public ArrayList<Travel> famousRestaurantLoadData(){
-        ArrayList<Travel> data = new ArrayList<>();
-
-        /*
-        data.add(new Travel("광주","솥밥솥밥",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.famous_1, null)));
-        data.add(new Travel("목동", "델리커리",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.famous_2, null)));
-        data.add(new Travel("파주", "톰바그",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.famous_3, null)));
-        data.add(new Travel("서울", "퓨전 선술집",
-                ResourcesCompat.getDrawable(getResources(), R.drawable.famous_4, null)));
-
-         */
-        return data;
-    }
 
     private void setAdapter(TravelAdapter adapter, RecyclerView recyclerView){
         recyclerView.setAdapter(adapter);
@@ -111,7 +68,7 @@ public class Fragment1 extends Fragment {
                 LinearLayoutManager.HORIZONTAL,false));
     }
 
-    private void loadData(ViewGroup view, TravelAdapter adapter) {
+    private void loadData(ViewGroup view, TravelAdapter adapter, String search, String eventDate) {
         AQuery aq = new AQuery(view);
 
         HashMap<String, String> params = new HashMap<>();
@@ -125,8 +82,12 @@ public class Fragment1 extends Fragment {
         params.put("areaCode", "5");//1 서울 //39 제주도 //5 광주 // 6 부산
         params.put("_type", "json");
 
-        String url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList";
+        String url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/" + search;
+
         url = addParams(url, params);
+
+        if(!eventDate.equals(""))
+            url += "&eventStartDate=" + eventDate;
 
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -192,7 +153,7 @@ public class Fragment1 extends Fragment {
     }
 
     private String parseTitle(String title){
-        return (title.length() >= 10 ) ? " " : title;
+        return (title.length() >= 12 ) ? title.substring(0, 12) + ".." : title;
     }
 
 }
