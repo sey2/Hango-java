@@ -28,8 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:tint="#80000000"
-                android:tintMode="src_atop" />
+                android:tintMode="src_atop"
+                app:tint="#70424141" />
 
             <TextView
                 android:id="@+id/cityTextView"
