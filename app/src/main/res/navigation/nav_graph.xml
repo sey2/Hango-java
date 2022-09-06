@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="hango_java.com.Fragment1"
+        android:name="hango_java.com.KakaoMapFragment"
         android:label="MapFragment"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_kakao_map" />
 
     <fragment
         android:id="@+id/userFragment"
