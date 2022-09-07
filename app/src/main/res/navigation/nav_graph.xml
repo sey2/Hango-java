@@ -25,8 +25,8 @@
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="hango_java.com.Fragment.Fragment1"
+        android:name="hango_java.com.Fragment.UserInfo"
         android:label="SettingFragment"
-        tools:layout="@layout/fragment_1" />
+        tools:layout="@layout/fragment_user_info" />
 
 </navigation>
