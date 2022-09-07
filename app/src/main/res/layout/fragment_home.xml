@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Fragment.Fragment1">
+        tools:context=".Fragment.HomeFragment">
 
         <ImageView
             android:id="@+id/backgroundImg"
@@ -124,12 +124,13 @@
                     android:fontFamily="@font/abhayalibre_semibold"
                     android:gravity="center"
                     android:hint="검색어를 입력해주세요"
+                    android:imeOptions="actionSearch"
                     android:inputType="textPersonName"
                     android:textColorHint="#B1B1B1"
                     android:textSize="15sp" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/serachButton"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="8dp"
