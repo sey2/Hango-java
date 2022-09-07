@@ -6,26 +6,26 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="hango_java.com.Fragment1"
+        android:name="hango_java.com.Fragment.Fragment1"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_1" >
     </fragment>
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="hango_java.com.KakaoMapFragment"
+        android:name="hango_java.com.Fragment.KakaoMapFragment"
         android:label="MapFragment"
         tools:layout="@layout/fragment_kakao_map" />
 
     <fragment
         android:id="@+id/userFragment"
-        android:name="hango_java.com.Fragment1"
+        android:name="hango_java.com.Fragment.Fragment1"
         android:label="UserFragment"
         tools:layout="@layout/fragment_1" />
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="hango_java.com.Fragment1"
+        android:name="hango_java.com.Fragment.Fragment1"
         android:label="SettingFragment"
         tools:layout="@layout/fragment_1" />
 

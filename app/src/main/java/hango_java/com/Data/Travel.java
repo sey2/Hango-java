@@ -1,9 +1,4 @@
-package hango_java.com;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.lifecycle.ViewModel;
+package hango_java.com.Data;
 
 public class Travel {
     String city;
@@ -25,5 +20,11 @@ public class Travel {
     public void setMapX(Double maxX) {this.mapX = maxX;}
     public void setMapY(Double mapY) {this.mapY = mapY;}
     public void setImage(String img){this.img = img;}
+
+    public String getCity(){return this.city;}
+    public String getSpot(){return this.spot;}
+    public String getImg(){return this.img;}
+    public Double getMapX(){return this.mapX;}
+    public Double getMapY(){return this.mapY;}
 
 }

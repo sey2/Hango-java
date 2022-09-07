@@ -1,9 +1,7 @@
-package hango_java.com;
+package hango_java.com.Fragment;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.androidquery.AQuery;
 
 
 import org.json.JSONArray;
@@ -31,6 +28,11 @@ import org.json.JSONObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import hango_java.com.Adapter.TravelAdapter;
+import hango_java.com.R;
+import hango_java.com.Data.Travel;
+import hango_java.com.ViewModel.TravelViewModel;
 
 public class Fragment1 extends Fragment {
 

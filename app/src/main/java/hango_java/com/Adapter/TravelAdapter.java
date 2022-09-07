@@ -1,11 +1,8 @@
-package hango_java.com;
+package hango_java.com.Adapter;
 
-import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,10 +11,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import hango_java.com.R;
+import hango_java.com.Data.Travel;
 
 public class TravelAdapter extends RecyclerView.Adapter<Holder> {
 
@@ -50,10 +49,10 @@ public class TravelAdapter extends RecyclerView.Adapter<Holder> {
 
 class Holder extends RecyclerView.ViewHolder{
 
-    private TextView cityTextView;
-    private TextView spotTextView;
-    private RelativeLayout background;
-    private ImageView imageView;
+    protected TextView cityTextView;
+    protected TextView spotTextView;
+    protected RelativeLayout background;
+    protected ImageView imageView;
 
     public Holder(View itemView){
         super(itemView);
@@ -69,8 +68,8 @@ class Holder extends RecyclerView.ViewHolder{
     }
 
     public void setTravel(Travel travel, View context){
-        cityTextView.setText(travel.city);
-        spotTextView.setText(travel.spot);
-        Glide.with(context).load(travel.img).into(imageView);
+        cityTextView.setText(travel.getCity());
+        spotTextView.setText(travel.getSpot());
+        Glide.with(context).load(travel.getImg()).into(imageView);
     }
 }

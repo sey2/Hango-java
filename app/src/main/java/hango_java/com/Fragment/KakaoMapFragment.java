@@ -1,6 +1,4 @@
-package hango_java.com;
-
-import static androidx.core.content.ContextCompat.getSystemService;
+package hango_java.com.Fragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -8,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 
@@ -32,8 +29,10 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import hango_java.com.geo.GeoPoint;
-import hango_java.com.geo.GeoTrans;
+import hango_java.com.R;
+import hango_java.com.Data.Travel;
+import hango_java.com.ViewModel.TravelViewModel;
+;
 
 public class KakaoMapFragment extends Fragment implements MapView.CurrentLocationEventListener {
 
@@ -71,18 +70,16 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
 
     public void markerAdd(){
         ArrayList<Travel> list = model.getList();
-        ArrayList<MapPOIItem> markerList = new ArrayList<>();
         for(Travel item : list){
-            Log.d("ViewModel", item.city);
+            Log.d("ViewModel", item.getCity());
             MapPOIItem marker = new MapPOIItem();
-            marker.setItemName(item.city);
+            marker.setItemName(item.getCity());
             marker.setTag(0);
-            marker.setMapPoint(MapPoint.mapPointWithGeoCoord(item.mapY, item.mapX));
+            marker.setMapPoint(MapPoint.mapPointWithGeoCoord(item.getMapY(), item.getMapX()));
             marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
             marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-            markerList.add(marker);
+            mapView.addPOIItem(marker);
         }
-        mapView.addPOIItems(markerList.toArray(new MapPOIItem[markerList.size()]));
     }
 
     @Override

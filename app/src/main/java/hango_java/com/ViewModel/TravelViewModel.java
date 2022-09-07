@@ -1,9 +1,11 @@
-package hango_java.com;
+package hango_java.com.ViewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
+
+import hango_java.com.Data.Travel;
 
 
 public class TravelViewModel extends ViewModel {
