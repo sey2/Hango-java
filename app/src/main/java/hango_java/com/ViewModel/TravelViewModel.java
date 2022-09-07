@@ -31,4 +31,6 @@ public class TravelViewModel extends ViewModel {
         liveItems.setValue(items);
     }
 
+    public void deleteList(){items = new ArrayList<>();}
+
 }

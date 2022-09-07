@@ -45,6 +45,8 @@ public class TravelAdapter extends RecyclerView.Adapter<Holder> {
     }
 
     public ArrayList<Travel> getItemList(){return listData;}
+
+    public void deleteList(){listData = new ArrayList<>();}
 }
 
 class Holder extends RecyclerView.ViewHolder{
