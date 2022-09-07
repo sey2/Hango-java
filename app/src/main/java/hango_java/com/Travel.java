@@ -1,8 +1,9 @@
 package hango_java.com;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.widget.TextView;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.lifecycle.ViewModel;
 
 public class Travel {
     String city;
@@ -24,4 +25,5 @@ public class Travel {
     public void setMapX(Double maxX) {this.mapX = maxX;}
     public void setMapY(Double mapY) {this.mapY = mapY;}
     public void setImage(String img){this.img = img;}
+
 }

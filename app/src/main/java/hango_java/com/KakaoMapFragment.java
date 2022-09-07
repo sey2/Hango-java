@@ -8,35 +8,46 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 
-public class KakaoMapFragment extends Fragment implements MapView.CurrentLocationEventListener{
+import java.util.ArrayList;
+
+public class KakaoMapFragment extends Fragment implements MapView.CurrentLocationEventListener {
 
     private static final String TAG = "kakao map";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     private MapView mapView;
     private ViewGroup mapViewContainer;
+    private TravelViewModel model;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_kakao_map, container, false);
+
+        model = new ViewModelProvider(this.getActivity()).get(TravelViewModel.class);
 
         mapView = new MapView(root.getContext());
         mapViewContainer = root.findViewById(R.id.map_view);
@@ -45,11 +56,29 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
-        }else {
+        } else {
             checkRunTimePermission();
         }
 
+        markerAdd();
+
         return root;
+    }
+
+    public void markerAdd(){
+        ArrayList<Travel> list = model.getList();
+
+        for(Travel item : list){
+            Log.d("ViewModel", item.city);
+            MapPOIItem marker = new MapPOIItem();
+            marker.setItemName(item.spot);
+            marker.setTag(0);
+            marker.setMapPoint(MapPoint.mapPointWithCONGCoord(item.mapX, item.mapY));
+            marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            mapView.addPOIItem(marker);
+
+        }
     }
 
     @Override
@@ -63,6 +92,7 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
         Log.i(TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
     }
+
     @Override
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
     }
@@ -86,7 +116,7 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
                                            @NonNull String[] permissions,
                                            @NonNull int[] grandResults) {
 
-        if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
             // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
             boolean check_result = true;
@@ -99,31 +129,30 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
                 }
             }
 
-            if ( check_result ) {
+            if (check_result) {
                 Log.d("@@@", "start");
                 //위치 값을 가져올 수 있음
 
-            }
-            else {
+            } else {
                 // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있다
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), REQUIRED_PERMISSIONS[0])) {
                     Toast.makeText(this.getContext(), "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
                     this.onDestroy();
-                }else {
+                } else {
                     Toast.makeText(this.getContext(), "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
                 }
             }
         }
     }
 
-    void checkRunTimePermission(){
+    void checkRunTimePermission() {
 
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(this.getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED ) {
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED) {
             // 2. 이미 퍼미션을 가지고 있다면
             // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
             // 3.  위치 값을 가져올 수 있음
@@ -194,6 +223,7 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
 
 }
 

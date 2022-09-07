@@ -1,7 +1,9 @@
 package hango_java.com;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,11 +36,14 @@ public class Fragment1 extends Fragment {
 
     protected RecyclerView todayRecycler,hotelRecycler, famousRecycler;
     protected TravelAdapter todayAdapter, hotelAdapter, famousAdapter;
+    private TravelViewModel model;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_1, container, false);
+
+        model = new ViewModelProvider(this.getActivity()).get(TravelViewModel.class);
 
         todayAdapter = new TravelAdapter();
         todayRecycler = rootView.findViewById(R.id.todayRecycler);
@@ -61,7 +67,6 @@ public class Fragment1 extends Fragment {
     }
 
 
-
     private void setAdapter(TravelAdapter adapter, RecyclerView recyclerView){
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
@@ -69,8 +74,6 @@ public class Fragment1 extends Fragment {
     }
 
     private void loadData(ViewGroup view, TravelAdapter adapter, String search, String eventDate) {
-        AQuery aq = new AQuery(view);
-
         HashMap<String, String> params = new HashMap<>();
         params.put("ServiceKey", "nzMrZtg6lBh%2FJHK%2FQ4bjXqIBHVo92ACZWaS7vQfxGW8KGUEqPRGwh2%2BviL8d4TcHqhsQQV1fZRuoUpNXMPmDQg%3D%3D");
         params.put("numOfRows", "10");
@@ -101,7 +104,6 @@ public class Fragment1 extends Fragment {
                             JSONObject items = (JSONObject) body.get("items");
                             JSONArray itemArray = items.getJSONArray("item");
 
-
                             ArrayList<Travel> arItem = new ArrayList<>();
                             for(int i=0; i<itemArray.length(); i++){
                                 JSONObject item = itemArray.getJSONObject(i);
@@ -112,8 +114,10 @@ public class Fragment1 extends Fragment {
                                 travel.setMapX(item.getDouble("mapx"));
                                 travel.setMapY(item.getDouble("mapy"));
                                 arItem.add(travel);
+                                model.add(travel);
                                 Log.d("Json",item.getString("addr1") + " " +
-                                        item.getString("title") + " " + item.getString("firstimage"));
+                                        item.getString("title") + " " + item.getString("firstimage") + " " +
+                                        item.getDouble("mapx") + " " + item.getDouble("mapy"));
                             }
 
                             if (arItem.size() > 0) {
@@ -155,5 +159,7 @@ public class Fragment1 extends Fragment {
     private String parseTitle(String title){
         return (title.length() >= 12 ) ? title.substring(0, 12) + ".." : title;
     }
+
+
 
 }
