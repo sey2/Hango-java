@@ -32,6 +32,9 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import hango_java.com.geo.GeoPoint;
+import hango_java.com.geo.GeoTrans;
+
 public class KakaoMapFragment extends Fragment implements MapView.CurrentLocationEventListener {
 
     private static final String TAG = "kakao map";
@@ -53,6 +56,7 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
         mapViewContainer = root.findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
+
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
@@ -67,18 +71,18 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
 
     public void markerAdd(){
         ArrayList<Travel> list = model.getList();
-
+        ArrayList<MapPOIItem> markerList = new ArrayList<>();
         for(Travel item : list){
             Log.d("ViewModel", item.city);
             MapPOIItem marker = new MapPOIItem();
-            marker.setItemName(item.spot);
+            marker.setItemName(item.city);
             marker.setTag(0);
-            marker.setMapPoint(MapPoint.mapPointWithCONGCoord(item.mapX, item.mapY));
+            marker.setMapPoint(MapPoint.mapPointWithGeoCoord(item.mapY, item.mapX));
             marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
             marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-            mapView.addPOIItem(marker);
-
+            markerList.add(marker);
         }
+        mapView.addPOIItems(markerList.toArray(new MapPOIItem[markerList.size()]));
     }
 
     @Override
