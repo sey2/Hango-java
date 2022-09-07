@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.UserInfo">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCardView"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/profile"
+        app:cardCornerRadius="75dp"
+        app:cardElevation="20dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:id="@+id/profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/profile"
+        android:src="@android:drawable/divider_horizontal_dim_dark" />
+
+    </androidx.cardview.widget.CardView>
+
+    <EditText
+        android:id="@+id/name_underLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#B3B3B3"
+        android:cursorVisible="true"
+        android:ems="9"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileCardView"
+        app:layout_constraintTop_toTopOf="@+id/profileCardView" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/abhayalibre_semibold"
+        android:text="세영님"
+        android:textColor="#090909"
+        app:layout_constraintBottom_toBottomOf="@+id/name_underLine"
+        app:layout_constraintEnd_toEndOf="@+id/name_underLine"
+        app:layout_constraintStart_toStartOf="@+id/name_underLine"
+        app:layout_constraintTop_toTopOf="@+id/name_underLine" />
+
+    <EditText
+        android:id="@+id/mbti_underLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#B3B3B3"
+        android:ems="9"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileCardView"
+        app:layout_constraintTop_toBottomOf="@+id/name_underLine" />
+
+    <TextView
+        android:id="@+id/mbtiTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:text="INFJ"
+        android:textColor="#090909"
+        app:layout_constraintBottom_toBottomOf="@+id/mbti_underLine"
+        app:layout_constraintEnd_toEndOf="@+id/mbti_underLine"
+        app:layout_constraintStart_toStartOf="@+id/mbti_underLine"
+        app:layout_constraintTop_toTopOf="@+id/mbti_underLine" />
+
+    <EditText
+        android:id="@+id/level_underLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#B3B3B3"
+        android:ems="9"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileCardView"
+        app:layout_constraintTop_toBottomOf="@+id/mbti_underLine" />
+
+    <TextView
+        android:id="@+id/levelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:text="여행 초심자"
+        android:textColor="#090909"
+        app:layout_constraintBottom_toBottomOf="@+id/level_underLine"
+        app:layout_constraintEnd_toEndOf="@+id/level_underLine"
+        app:layout_constraintStart_toStartOf="@+id/level_underLine"
+        app:layout_constraintTop_toTopOf="@+id/level_underLine" />
+
+    <ImageView
+        android:id="@+id/rectangle"
+        android:layout_width="380dp"
+        android:layout_height="170dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/line"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangle"
+        app:layout_constraintEnd_toEndOf="@+id/rectangle"
+        app:layout_constraintStart_toStartOf="@+id/rectangle"
+        app:layout_constraintTop_toTopOf="@+id/rectangle" />
+
+    <TextView
+        android:id="@+id/travelRateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-light"
+        android:text="여행 지수"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@+id/rectangle"
+        app:layout_constraintTop_toTopOf="@+id/rectangle" />
+
+    <TextView
+        android:id="@+id/mannerRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="75dp"
+        android:text="70"
+        android:textColor="#3AA4F4"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="@+id/rectangle"
+        app:layout_constraintTop_toBottomOf="@id/mannerRateTextVIew" />
+
+    <TextView
+        android:id="@+id/percent2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="32dp"
+        android:text="%"
+        android:textColor="#3AA4F4"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/mannerRate"
+        app:layout_constraintTop_toBottomOf="@+id/mannerRateTextVIew" />
+
+    <TextView
+        android:id="@+id/explanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="20dp"
+        android:text="여행하면서 좋은 일이 생길 확률"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@id/rectangle"
+        app:layout_constraintTop_toBottomOf="@id/TravelRate" />
+
+
+
+    <!-- -->
+
+    <TextView
+        android:id="@+id/mannerRateTextVIew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="60dp"
+        android:fontFamily="sans-serif-light"
+        android:text="매너 지수"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="@+id/rectangle"
+        app:layout_constraintTop_toTopOf="@+id/rectangle" />
+
+    <TextView
+        android:id="@+id/TravelRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="65dp"
+        android:text="20"
+        android:textColor="@color/design_default_color_secondary"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="@+id/rectangle"
+        app:layout_constraintTop_toBottomOf="@id/travelRateTextView" />
+
+    <TextView
+        android:id="@+id/percent1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="7dp"
+        android:text="%"
+        android:textColor="@color/design_default_color_secondary"
+
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/TravelRate"
+        app:layout_constraintTop_toBottomOf="@+id/travelRateTextView" />
+
+    <TextView
+        android:id="@+id/explanation2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="20dp"
+        android:text="사람들이 평가한 매너 지수입니다."
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@id/rectangle"
+        app:layout_constraintTop_toBottomOf="@id/TravelRate" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
