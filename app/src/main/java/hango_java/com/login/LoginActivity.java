@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,6 +23,8 @@ import org.json.JSONObject;
 
 import hango_java.com.MainActivity;
 import hango_java.com.R;
+import hango_java.com.ViewModel.TravelViewModel;
+import hango_java.com.ViewModel.UserViewModel;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
@@ -98,10 +101,12 @@ public class LoginActivity extends AppCompatActivity {
                         if (success) {
                             String userID = jsonObject.getString("userID");
                             String userPass = jsonObject.getString("userPassword");
+                            String userName = jsonObject.getString("userName");
                             Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.putExtra("log", "User");
                             intent.putExtra("userID", userID);
+                            intent.putExtra("userName", userName);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();

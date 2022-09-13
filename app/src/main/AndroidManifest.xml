@@ -20,20 +20,20 @@
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="e6ee48ffe688d7e4c3afd97356d5e50c"/>
         <activity
             android:name=".login.RegisterActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".login.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
         </activity>
 
         <activity

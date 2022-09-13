@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,11 +28,14 @@ import java.util.List;
 import hango_java.com.Adapter.ChatAdapter;
 import hango_java.com.Data.ChatMsgVO;
 import hango_java.com.R;
+import hango_java.com.ViewModel.TravelViewModel;
+import hango_java.com.ViewModel.UserViewModel;
 
 public class ChatMsgFragment extends Fragment implements View.OnClickListener {
 
     // 로그용 TAG
     private final String TAG = getClass().getSimpleName();
+    private UserViewModel userViewModel;
 
     // 채팅을 입력할 입력창과 전송 버튼
     EditText content_et;
@@ -72,6 +76,8 @@ public class ChatMsgFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_msg, container, false);
 
+        userViewModel = new ViewModelProvider(this.getActivity()).get(UserViewModel.class);
+
         content_et = view.findViewById(R.id.content_et);
         send_iv = view.findViewById(R.id.send_iv);
 
@@ -80,7 +86,7 @@ public class ChatMsgFragment extends Fragment implements View.OnClickListener {
 
         // ChatRoomFragment 에서 받는 채팅방 이름
         chatroom = getArguments().getString("chatroom");
-        mAdapter = new ChatAdapter(msgList);
+        mAdapter = new ChatAdapter(msgList, userViewModel.getLiveItems().getValue().getUserID());
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(mAdapter);
@@ -101,7 +107,7 @@ public class ChatMsgFragment extends Fragment implements View.OnClickListener {
                 msgList.add(chatMsgVO);
 
             // 채팅 메시지 배열에 담고 RecyclerView 다시 그리기
-                mAdapter = new ChatAdapter(msgList);
+                mAdapter = new ChatAdapter(msgList, userViewModel.getLiveItems().getValue().getUserID());
                 rv.setAdapter(mAdapter);
                 rv.scrollToPosition(msgList.size()-1);
                 Log.d(TAG, msgList.size()+"");
@@ -134,7 +140,7 @@ public class ChatMsgFragment extends Fragment implements View.OnClickListener {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                     // Database 에 저장할 객체 만들기
-                    ChatMsgVO msgVO = new ChatMsgVO("casio2978", df.format(new Date()).toString(), content_et.getText().toString().trim());
+                    ChatMsgVO msgVO = new ChatMsgVO(userViewModel.getLiveItems().getValue().getUserID(), df.format(new Date()).toString(), content_et.getText().toString().trim());
 
                 // 해당 DB 에 값 저장시키기
                     myRef.push().setValue(msgVO);

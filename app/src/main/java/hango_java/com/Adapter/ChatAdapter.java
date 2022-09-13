@@ -16,15 +16,18 @@ import hango_java.com.R;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     private final List<ChatMsgVO> mValues;
+    private String userID;
 
-    public ChatAdapter(List<ChatMsgVO> items) {
+    public ChatAdapter(List<ChatMsgVO> items, String userID) {
         mValues = items;
+        this.userID = userID;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_chat_msg, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -32,7 +35,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         ChatMsgVO vo = mValues.get(position);
-        if (mValues.get(position).getUserId().equals("casio2978")){
+        if (mValues.get(position).getUserId().equals("userID")){
             holder.other_cl.setVisibility(View.GONE);
             holder.my_cl.setVisibility(View.VISIBLE);
 
