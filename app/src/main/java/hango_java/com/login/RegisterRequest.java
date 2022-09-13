@@ -20,6 +20,8 @@ public class RegisterRequest extends StringRequest {
         map.put("userID", UserEmail);
         map.put("userPassword", UserPwd);
         map.put("userName", UserName);
+        map.put("userProfile", "https://user-images.githubusercontent.com/54762273/189822446-e8b21800-6184-456c-8421-24268988b1e5.png");
+        map.put("userMbti", "INFJ");
     }
 
     @Override

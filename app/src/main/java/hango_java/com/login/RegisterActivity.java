@@ -42,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_id = findViewById(R.id.et_id);
         et_pass = findViewById(R.id.et_pass);
         et_name = findViewById(R.id.et_name);
+        et_passCk = findViewById(R.id.et_passck);
 
         validateButton = findViewById(R.id.validateButton);
         validateButton.setOnClickListener((v) -> {
@@ -61,7 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
@@ -150,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
         String pass = et_pass.getText().toString();
         String passCk = et_passCk.getText().toString();
 
-        if (pass.length() >= 8 && passCk.length() >= 8 && pass.equals(passCk)) return true;
+        if (pass.length() >= 8 && passCk.length() >= 8 && pass.equals(passCk)) return false;
         else if (pass.length() < 8)
             Toast.makeText(getApplicationContext(), "비밀번호는 8자 이상이여야 합니다.", Toast.LENGTH_LONG).show();
         else if (passCk.length() < 8)
@@ -158,6 +158,6 @@ public class RegisterActivity extends AppCompatActivity {
         else if (pass.equals(passCk))
             Toast.makeText(getApplicationContext(), "입력하신 비밀번호와 비밀번호 확인칸이 일치 하지 않습니다.", Toast.LENGTH_LONG).show();
 
-        return false;
+        return true;
     }
 }

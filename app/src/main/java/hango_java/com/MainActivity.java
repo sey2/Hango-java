@@ -1,23 +1,17 @@
 package hango_java.com;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import hango_java.com.Adapter.OnItemClick;
-import hango_java.com.Data.UserInfo;
+import hango_java.com.Data.UserInfoData;
 import hango_java.com.ViewModel.UserViewModel;
 
 
@@ -38,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         userModel = new ViewModelProvider(this).get(UserViewModel.class);
         Intent intent = getIntent();
-        userModel.setLiveItems(new UserInfo(intent.getExtras().getString("userID"),
-                intent.getExtras().getString("userName")));
+        userModel.setLiveItems(new UserInfoData(intent.getExtras().getString("userID"),
+                intent.getExtras().getString("userName"), intent.getExtras().getString("userProfile"),
+                intent.getExtras().getString("userMbti")));
     }
 
 }
