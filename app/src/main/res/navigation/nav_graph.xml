@@ -18,15 +18,24 @@
         tools:layout="@layout/fragment_kakao_map" />
 
     <fragment
-        android:id="@+id/userFragment"
-        android:name="hango_java.com.Fragment.HomeFragment"
+        android:id="@+id/chatListFragment"
+        android:name="hango_java.com.Fragment.ChatListFragment"
         android:label="UserFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_chat_list" />
 
     <fragment
-        android:id="@+id/settingFragment"
+        android:id="@+id/userFragment"
         android:name="hango_java.com.Fragment.UserInfo"
         android:label="SettingFragment"
         tools:layout="@layout/fragment_user_info" />
+
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="hango_java.com.Fragment.ChatMsgFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_chat_msg" />
+
+
 
 </navigation>

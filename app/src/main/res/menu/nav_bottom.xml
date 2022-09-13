@@ -8,11 +8,11 @@
         android:title="맵"
         android:icon="@drawable/map_ic" />
 
-    <item android:id="@+id/userFragment"
+    <item android:id="@+id/chatListFragment"
         android:title="유저"
         android:icon="@drawable/user_ic" />
 
-    <item android:id="@+id/settingFragment"
+    <item android:id="@+id/userFragment"
         android:title="설정"
         android:icon="@drawable/setting_ic" />
 </menu>

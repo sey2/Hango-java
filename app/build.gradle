@@ -38,11 +38,15 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:2.10.0" // 카카오 로그인
     implementation 'org.jsoup:jsoup:1.11.3' // 웹 크롤링
     implementation 'com.googlecode.android-query:android-query:0.25.9'
-    implementation 'com.github.bumptech.glide:glide:4.12.0' // Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0' // Glide
     implementation files('libs/libDaumMapAndroid.jar')  // kakao map
 
     implementation platform('com.google.firebase:firebase-bom:30.2.0') // Firebase
+    implementation 'de.hdodenhof:circleimageview:3.1.0' // circleImageView
 
     implementation("androidx.cardview:cardview:1.0.0")
     implementation 'androidx.core:core-ktx:1.7.0'

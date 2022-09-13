@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
 
 import hango_java.com.Adapter.TravelAdapter;
 import hango_java.com.R;
@@ -210,6 +211,7 @@ public class HomeFragment extends Fragment {
             }
         });
         requestQueue.add(jsonObjectRequest);
+
     }
 
     private String addParams(String url, HashMap<String, String> mapParam) {
