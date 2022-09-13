@@ -4,22 +4,20 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
-
-import hango_java.com.Data.UserInfo;
+import hango_java.com.Data.UserInfoData;
 
 public class UserViewModel extends ViewModel {
-    private MutableLiveData<UserInfo> liveItems;
+    private MutableLiveData<UserInfoData> liveItems;
 
 
-    public LiveData<UserInfo> getLiveItems(){
+    public LiveData<UserInfoData> getLiveItems(){
         if(liveItems == null)
-            liveItems = new MutableLiveData<UserInfo>();
+            liveItems = new MutableLiveData<UserInfoData>();
 
         return liveItems;
     }
 
-    public void setLiveItems(UserInfo item){
+    public void setLiveItems(UserInfoData item){
 
         if(liveItems == null) getLiveItems();
 
