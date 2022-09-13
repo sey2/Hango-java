@@ -1,13 +1,16 @@
 package hango_java.com.Data;
 
-public class UserInfo {
+public class UserInfoData {
     String userID;
     String userName;
     String userProfile;
+    String userMbti;
 
-    public UserInfo(String userID, String userName){
+    public UserInfoData(String userID, String userName, String userProfile, String userMbti){
         this.userID = userID;
         this.userName = userName;
+        this.userProfile = userProfile;
+        this.userMbti = userMbti;
     }
 
     public String getUserID() {
@@ -17,6 +20,8 @@ public class UserInfo {
     public String getUserName() {
         return userName;
     }
+
+    public String getUserMbti() {return userMbti;}
 
     public String getUserProfile() {
         return userProfile;
@@ -33,4 +38,6 @@ public class UserInfo {
     public void setUserProfile(String userProfile) {
         this.userProfile = userProfile;
     }
+
+    public void setUserMbti(String userMbti) { this.userMbti = userMbti; }
 }
