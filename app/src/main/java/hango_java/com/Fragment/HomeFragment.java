@@ -1,7 +1,7 @@
 package hango_java.com.Fragment;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,6 +26,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 import org.json.JSONArray;
@@ -46,8 +52,10 @@ public class HomeFragment extends Fragment {
     protected RecyclerView todayRecycler,hotelRecycler, famousRecycler;
     protected TravelAdapter todayAdapter, hotelAdapter, famousAdapter;
     private TravelViewModel model;
+    private UserViewModel userModel;
     private EditText searchText;
     private ImageView searchButton;
+    private ImageView profile;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -55,6 +63,7 @@ public class HomeFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
         model = new ViewModelProvider(this.getActivity()).get(TravelViewModel.class);
+        //userModel  = new ViewModelProvider(this.getActivity()).get(UserViewModel.class);
 
         todayAdapter = new TravelAdapter();
         todayRecycler = rootView.findViewById(R.id.todayRecycler);
@@ -76,6 +85,9 @@ public class HomeFragment extends Fragment {
 
         searchText = rootView.findViewById(R.id.searchEditText);
         searchButton = rootView.findViewById(R.id.serachButton);
+        profile = rootView.findViewById(R.id.home_profile);
+
+       // setProfileFromCloud();
 
         attachListener(container, date);
 
@@ -248,7 +260,27 @@ public class HomeFragment extends Fragment {
         }
 
             return "-1";
+    }
 
+    private void setProfileFromCloud(){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imgRef = storageRef.child("profile/" + userModel.getLiveItems().getValue().getUserID() +"profile.png");
+
+        if(imgRef != null){
+            imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(getContext()).load(uri).into(profile);
+                }
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("test", e.toString());
+                }
+            });
+        }
     }
 
 }
