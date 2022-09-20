@@ -25,11 +25,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import hango_java.com.R;
-import hango_java.com.ViewModel.UserViewModel;
+import hango_java.com.ViewModel.TravelViewModel;
 
 public class UserInfo extends Fragment {
 
-    private UserViewModel userModel;
+    private TravelViewModel userModel;
     private ImageView profile;
     private TextView mbtiTextView;
     private TextView nameTextView;
@@ -43,18 +43,18 @@ public class UserInfo extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_user_info, container, false);
 
-        userModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
+        userModel = new ViewModelProvider(getActivity()).get(TravelViewModel.class);
         profile = root.findViewById(R.id.home_profile);
         mbtiTextView = root.findViewById(R.id.mbtiTextView);
         nameTextView = root.findViewById(R.id.nameTextView);
         changImageBtn = root.findViewById(R.id.changeImageBtn);
 
         // 사용자 프로필을 불러온다.
-        Glide.with(getContext()).load(userModel.getLiveItems().getValue().getUserProfile()).into(profile);
+        Glide.with(getContext()).load(userModel.getUserinfo().getValue().getUserProfile()).into(profile);
 
         // 사용자 Mbti, 이름 설정
-        mbtiTextView.setText(userModel.getLiveItems().getValue().getUserMbti());
-        nameTextView.setText(userModel.getLiveItems().getValue().getUserName() + "님");
+        mbtiTextView.setText(userModel.getUserinfo().getValue().getUserMbti());
+        nameTextView.setText(userModel.getUserinfo().getValue().getUserName() + "님");
 
         changImageBtn.setOnClickListener((v) -> {
             Intent intent = new Intent();
@@ -79,6 +79,7 @@ public class UserInfo extends Fragment {
                     Uri imgUri = data.getData();    // 갤러리에서 사진을 가져와
                     cloudUploadImg(imgUri);     // 클라우드에 이미지 저장
                     profile.setImageURI(imgUri);
+                    userModel.getUserinfo().getValue().setProfileUri(imgUri);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -90,13 +91,14 @@ public class UserInfo extends Fragment {
 
     public void cloudUploadImg(Uri imgUri){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        String fileName = userModel.getLiveItems().getValue().getUserID() +"profile.png";
+        String fileName = userModel.getUserinfo().getValue().getUserID() +"profile.png";
         StorageReference storageRef = storage.getReference("profile/" + fileName);
 
         UploadTask uploadTask = storageRef.putFile(imgUri);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                 Log.d("test", "sucess");
             }
         });
@@ -105,7 +107,7 @@ public class UserInfo extends Fragment {
     private void setProfileFromCloud(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference imgRef = storageRef.child("profile/" + userModel.getLiveItems().getValue().getUserID() +"profile.png");
+        StorageReference imgRef = storageRef.child("profile/" + userModel.getUserinfo().getValue().getUserID() +"profile.png");
 
         if(imgRef != null){
             imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

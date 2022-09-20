@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,10 +21,9 @@ import com.kakao.sdk.user.UserApiClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import hango_java.com.Fragment.HomeFragment;
 import hango_java.com.MainActivity;
 import hango_java.com.R;
-import hango_java.com.ViewModel.TravelViewModel;
-import hango_java.com.ViewModel.UserViewModel;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
@@ -106,12 +105,14 @@ public class LoginActivity extends AppCompatActivity {
                             String userMbti = jsonObject.getString("userMbti");
 
                             Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
+
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.putExtra("log", "User");
                             intent.putExtra("userID", userID);
                             intent.putExtra("userName", userName);
                             intent.putExtra("userProfile", userProfile);
                             intent.putExtra("userMbti", userMbti);
+
 
                             startActivity(intent);
                         } else {

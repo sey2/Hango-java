@@ -6,17 +6,19 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 
 import hango_java.com.Data.Travel;
+import hango_java.com.Data.UserInfoData;
 
 
 public class TravelViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<Travel>> liveItems;
+    private MutableLiveData<ArrayList<Travel>> travelItems;
+    private MutableLiveData<UserInfoData> userInfoItem;
     private ArrayList<Travel> items = new ArrayList<>();
 
-    public LiveData<ArrayList<Travel>> getLiveItems(){
-        if(liveItems == null)
-            liveItems = new MutableLiveData<ArrayList<Travel>>();
+    public LiveData<ArrayList<Travel>> getTravelLiveItems(){
+        if(travelItems == null)
+            travelItems = new MutableLiveData<ArrayList<Travel>>();
 
-        return liveItems;
+        return travelItems;
     }
 
     public ArrayList<Travel> getList (){
@@ -26,11 +28,27 @@ public class TravelViewModel extends ViewModel {
     public void add(Travel item){
         items.add(item);
 
-        if(liveItems == null) getLiveItems();
+        if(travelItems == null) getTravelLiveItems();
 
-        liveItems.setValue(items);
+        travelItems.setValue(items);
     }
 
     public void deleteList(){items = new ArrayList<>();}
+
+
+    public MutableLiveData<UserInfoData> getUserinfo(){
+        if(userInfoItem == null)
+            userInfoItem = new MutableLiveData<UserInfoData>();
+
+        return userInfoItem;
+    }
+
+    public void setLiveItems(UserInfoData item){
+
+        if(userInfoItem == null) getUserinfo();
+
+        userInfoItem.setValue(item);
+
+    }
 
 }

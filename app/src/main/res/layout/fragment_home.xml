@@ -81,7 +81,6 @@
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/profile"
             app:cardCornerRadius="75dp"
             app:cardElevation="20dp"
 
@@ -91,9 +90,7 @@
             <ImageView
                 android:id="@+id/home_profile"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/profile"
-                android:src="@android:drawable/divider_horizontal_dim_dark" />
+                android:layout_height="wrap_content" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView

@@ -1,10 +1,13 @@
 package hango_java.com.Data;
 
+import android.net.Uri;
+
 public class UserInfoData {
     String userID;
     String userName;
     String userProfile;
     String userMbti;
+    Uri profileUri;
 
     public UserInfoData(String userID, String userName, String userProfile, String userMbti){
         this.userID = userID;
@@ -40,4 +43,8 @@ public class UserInfoData {
     }
 
     public void setUserMbti(String userMbti) { this.userMbti = userMbti; }
+
+    public void setProfileUri(Uri uri){this.profileUri = uri;}
+
+    public Uri getProfileUri(){return this.profileUri;}
 }

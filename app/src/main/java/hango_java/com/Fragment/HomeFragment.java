@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,17 +45,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import hango_java.com.Adapter.TravelAdapter;
+import hango_java.com.Data.UserInfoData;
 import hango_java.com.R;
 import hango_java.com.Data.Travel;
 import hango_java.com.ViewModel.TravelViewModel;
-import hango_java.com.ViewModel.UserViewModel;
+import retrofit2.http.Url;
 
 public class HomeFragment extends Fragment {
 
     protected RecyclerView todayRecycler,hotelRecycler, famousRecycler;
     protected TravelAdapter todayAdapter, hotelAdapter, famousAdapter;
     private TravelViewModel model;
-    private UserViewModel userModel;
     private EditText searchText;
     private ImageView searchButton;
     private ImageView profile;
@@ -63,7 +66,6 @@ public class HomeFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
         model = new ViewModelProvider(this.getActivity()).get(TravelViewModel.class);
-        //userModel  = new ViewModelProvider(this.getActivity()).get(UserViewModel.class);
 
         todayAdapter = new TravelAdapter();
         todayRecycler = rootView.findViewById(R.id.todayRecycler);
@@ -87,13 +89,32 @@ public class HomeFragment extends Fragment {
         searchButton = rootView.findViewById(R.id.serachButton);
         profile = rootView.findViewById(R.id.home_profile);
 
-       // setProfileFromCloud();
-
         attachListener(container, date);
 
+        Log.d("Activity2", "HomeFragment");
+
+        if(model.getUserinfo().getValue() != null) {
+            model.getUserinfo().observe(this.getActivity(), new Observer<UserInfoData>() {
+                @Override
+                public void onChanged(UserInfoData userInfoData) {
+                    Log.d("callUrl", "change: " + userInfoData.getProfileUri());
+                    Glide.with(getContext()).load(userInfoData.getProfileUri()).into(profile);
+                }
+            });
+        }
 
         return rootView;
     }
+
+    // 앱 첫 실행순서 HomeFragment -> MainActivity -> HomeFragment (onResume)
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(model.getUserinfo().getValue().getProfileUri() == null) setProfileFromCloud();
+
+    }
+
 
     private void attachListener(ViewGroup container, String date[]){
         // 검색어 입력 후 자판 내리기
@@ -265,13 +286,14 @@ public class HomeFragment extends Fragment {
     private void setProfileFromCloud(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference imgRef = storageRef.child("profile/" + userModel.getLiveItems().getValue().getUserID() +"profile.png");
+        StorageReference imgRef = storageRef.child("profile/" + model.getUserinfo().getValue().getUserID() +"profile.png");
 
         if(imgRef != null){
             imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Glide.with(getContext()).load(uri).into(profile);
+                    Log.d("callUrl", "sucess" + uri);
+                    Glide.with(getContext()).load(uri).error(R.drawable.user_ic).into(profile);
                 }
 
             }).addOnFailureListener(new OnFailureListener() {
@@ -282,5 +304,6 @@ public class HomeFragment extends Fragment {
             });
         }
     }
+
 
 }

@@ -12,7 +12,6 @@
         android:layout_height="130dp"
         android:layout_marginTop="100dp"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/profile"
         app:cardCornerRadius="75dp"
         app:cardElevation="20dp"
 

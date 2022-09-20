@@ -25,7 +25,7 @@
         android:layout_above="@id/et_name"
         android:layout_centerInParent="true"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/profile" />
+        android:src="@drawable/user_ic" />
 
     <Button
         android:id="@+id/enterBtn"
