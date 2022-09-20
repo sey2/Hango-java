@@ -4,12 +4,15 @@
 ## 💭  Todo List
 - 프로토타입 설계
   - [x] 로그인 (PHP)
-  - [v] KaKao Login
+  - [ ] KaKao Login
   - [x] Login Form UI
   - [x] Register Form UI
   - [x] Bottom Navigation
   - [x] HomeFragment
   - [x] kakao Map
+  - [x] cloud 
+  - [x] chatting system
+  - [ ] UserInfoForm
 
 <table>
   <tr>
@@ -35,3 +38,6 @@
 |Map|https://apis.map.kakao.com/android/|
 |Network|Volley|
 |Data|ViewModel, LiveData |
+|Login| PHP, kakao API |
+|DB| dothome, Google Realtime DB|
+|Storage|Google Cloude Store|
