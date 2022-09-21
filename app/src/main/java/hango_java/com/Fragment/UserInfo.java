@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +35,7 @@ public class UserInfo extends Fragment {
     private TextView mbtiTextView;
     private TextView nameTextView;
     private Button changImageBtn;
+    private ProgressBar expBar;
 
     private static final int REQUEST_CODE = 0;
 
@@ -48,6 +50,7 @@ public class UserInfo extends Fragment {
         mbtiTextView = root.findViewById(R.id.mbtiTextView);
         nameTextView = root.findViewById(R.id.nameTextView);
         changImageBtn = root.findViewById(R.id.changeImageBtn);
+        expBar = root.findViewById(R.id.expBar);
 
         // 사용자 프로필을 불러온다.
         Glide.with(getContext()).load(userModel.getUserinfo().getValue().getUserProfile()).into(profile);
@@ -63,6 +66,8 @@ public class UserInfo extends Fragment {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent, REQUEST_CODE);
         });
+
+        expBar.setProgress(75);
 
         setProfileFromCloud();
 

@@ -59,7 +59,7 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
                     // 이동할 Fragment 선언
                     ChatMsgFragment chatMsgFragment = ChatMsgFragment.newInstance();
 
-                        // 이동할 Fragment 에 데이터 객체 담기
+                    // 이동할 Fragment 에 데이터 객체 담기
                     chatMsgFragment.setArguments(argu);
 
 
