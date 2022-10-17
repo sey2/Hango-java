@@ -13,6 +13,8 @@
   - [x] cloud 
   - [x] chatting system
   - [ ] UserInfoForm
+  - [ ] Kakao 맵 마커 클릭하면 카카오 맵 열리게 끔
+  - [ ] HomeFragent Item View
 
 <table>
   <tr>
