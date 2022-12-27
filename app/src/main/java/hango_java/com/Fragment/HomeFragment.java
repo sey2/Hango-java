@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -60,6 +61,8 @@ public class HomeFragment extends Fragment {
     private ImageView searchButton;
     private ImageView profile;
 
+    private TextView userNameTextView;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +92,8 @@ public class HomeFragment extends Fragment {
         searchButton = rootView.findViewById(R.id.serachButton);
         profile = rootView.findViewById(R.id.home_profile);
 
+        userNameTextView = rootView.findViewById(R.id.userName);
+
         attachListener(container, date);
 
         Log.d("Activity2", "HomeFragment");
@@ -111,8 +116,10 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if(model.getUserinfo().getValue().getProfileUri() == null) setProfileFromCloud();
+        if(model.getUserinfo().getValue().getProfileUri() == null)
+            setProfileFromCloud();
 
+        userNameTextView.setText(model.getUserinfo().getValue().getUserName());
     }
 
 
