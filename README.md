@@ -4,7 +4,7 @@
 ## 💭  Todo List
 - 프로토타입 설계
   - [x] 로그인 (PHP)
-  - [ ] KaKao Login
+  - [x] KaKao Login
   - [x] Login Form UI
   - [x] Register Form UI
   - [x] Bottom Navigation
@@ -13,8 +13,8 @@
   - [x] cloud 
   - [x] chatting system
   - [ ] UserInfoForm
-  - [ ] Kakao 맵 마커 클릭하면 카카오 맵 열리게 끔
-  - [ ] HomeFragent Item View
+  - [x] Kakao 맵 마커 클릭하면 카카오 맵 열리게 끔
+  - [x] HomeFragent Item View
 
 <table>
   <tr>
