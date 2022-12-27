@@ -17,10 +17,6 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import net.daum.mf.map.api.MapPOIItem;
-import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapView;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -29,10 +25,14 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 import hango_java.com.R;
 import hango_java.com.Data.Travel;
 import hango_java.com.ViewModel.TravelViewModel;
-;
+
 
 public class KakaoMapFragment extends Fragment implements MapView.CurrentLocationEventListener {
 
