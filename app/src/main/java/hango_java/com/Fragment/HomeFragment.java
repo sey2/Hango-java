@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import hango_java.com.Adapter.TravelAdapter;
+import hango_java.com.BuildConfig;
 import hango_java.com.Data.UserInfoData;
 import hango_java.com.R;
 import hango_java.com.Data.Travel;
@@ -177,7 +178,7 @@ public class HomeFragment extends Fragment {
 
     private void loadData(ViewGroup view, TravelAdapter adapter, String search, String eventDate, String local) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("ServiceKey", "nzMrZtg6lBh%2FJHK%2FQ4bjXqIBHVo92ACZWaS7vQfxGW8KGUEqPRGwh2%2BviL8d4TcHqhsQQV1fZRuoUpNXMPmDQg%3D%3D");
+        params.put("ServiceKey", BuildConfig.TRAVEL_API_KEY);
         params.put("numOfRows", "10");
         params.put("pageNo", "1");
         params.put("MobileOS", "ETC");
