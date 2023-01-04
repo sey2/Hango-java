@@ -35,7 +35,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         ChatMsgVO vo = mValues.get(position);
-        if (mValues.get(position).getUserId().equals("userID")){
+        if (mValues.get(position).getUserId().equals(userID)){
             holder.other_cl.setVisibility(View.GONE);
             holder.my_cl.setVisibility(View.VISIBLE);
 
