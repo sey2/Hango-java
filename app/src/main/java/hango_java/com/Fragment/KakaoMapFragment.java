@@ -1,5 +1,4 @@
 package hango_java.com.Fragment;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +17,10 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -25,16 +29,13 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import net.daum.mf.map.api.MapPOIItem;
-import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapView;
-
-import hango_java.com.R;
 import hango_java.com.Data.Travel;
+import hango_java.com.Interface.MarkerEventListener;
+import hango_java.com.R;
 import hango_java.com.ViewModel.TravelViewModel;
 
 
-public class KakaoMapFragment extends Fragment implements MapView.CurrentLocationEventListener {
+public class KakaoMapFragment extends Fragment implements MapView.CurrentLocationEventListener{
 
     private static final String TAG = "kakao map";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -44,6 +45,8 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
     private MapView mapView;
     private ViewGroup mapViewContainer;
     private TravelViewModel model;
+
+    private MarkerEventListener poiItemEventListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,11 +60,16 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
 
 
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+        mapView.setCurrentLocationEventListener(this);
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         } else {
             checkRunTimePermission();
         }
+
+        poiItemEventListener = new MarkerEventListener(getActivity());
+
+        mapView.setPOIItemEventListener(poiItemEventListener);
 
         markerAdd();
 
@@ -80,35 +88,14 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
             marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
             mapView.addPOIItem(marker);
         }
+
+        // mapView.selectPOIItem(mapView.getPOIItems()[0], true);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mapViewContainer.removeAllViews();
-    }
-
-    @Override
-    public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
-        MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-        Log.i(TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
-    }
-
-    @Override
-    public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
-    }
-
-    @Override
-    public void onCurrentLocationUpdateFailed(MapView mapView) {
-    }
-
-    @Override
-    public void onCurrentLocationUpdateCancelled(MapView mapView) {
-    }
-
-
-    private void onFinishReverseGeoCoding(String result) {
-//        Toast.makeText(LocationDemoActivity.this, "Reverse Geo-coding : " + result, Toast.LENGTH_SHORT).show();
     }
 
     // ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드
@@ -226,5 +213,20 @@ public class KakaoMapFragment extends Fragment implements MapView.CurrentLocatio
     }
 
 
-}
+    @Override
+    public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
+        // this.currentLocation = currentLocation.getMapPointGeoCoord();
+    }
 
+    @Override
+    public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
+    }
+
+    @Override
+    public void onCurrentLocationUpdateFailed(MapView mapView) {
+    }
+
+    @Override
+    public void onCurrentLocationUpdateCancelled(MapView mapView) {
+    }
+}
