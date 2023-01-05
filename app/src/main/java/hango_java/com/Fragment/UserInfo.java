@@ -1,6 +1,9 @@
 package hango_java.com.Fragment;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,6 +27,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.InputStream;
 
 import hango_java.com.R;
 import hango_java.com.ViewModel.TravelViewModel;
@@ -60,11 +67,21 @@ public class UserInfo extends Fragment {
         nameTextView.setText(userModel.getUserinfo().getValue().getUserName() + "님");
 
         changImageBtn.setOnClickListener((v) -> {
+            /*
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent, REQUEST_CODE);
+
+             */
+
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.putExtra("crop",true);
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+
+            startActivityForResult(intent, 104);
         });
 
         expBar.setProgress(75);
@@ -75,9 +92,10 @@ public class UserInfo extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
 
+        /*
         if (requestCode == REQUEST_CODE) {
             if (resultCode == getActivity().RESULT_OK) {
                 try {
@@ -91,6 +109,44 @@ public class UserInfo extends Fragment {
             } else if (resultCode == getActivity().RESULT_CANCELED) {
                 // 취소시 호출할 행동
             }
+        }
+
+         */
+
+        switch (requestCode) {
+            case 104:  // 사진을 앨범에서 선택하는 경우
+                if(resultCode == getActivity().RESULT_OK) {
+                    Uri imgUri = intent.getData();
+                    cloudUploadImg(imgUri);     // 클라우드에 이미지 저장
+                    userModel.getUserinfo().getValue().setProfileUri(imgUri);
+                    CropImage.activity(imgUri).setGuidelines(CropImageView.Guidelines.ON).start(getContext(), this);
+                }
+
+                break;
+
+            /* 자른 사진을 pictureImageView에 적용 */
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                CropImage.ActivityResult result = CropImage.getActivityResult(intent);
+                if (result != null) {
+                    Uri resultUri = result.getUri();
+
+                    ContentResolver resolver = getContext().getContentResolver();
+
+                    try {
+                        InputStream instream = resolver.openInputStream(resultUri);
+                        Bitmap resultPhotoBitmap = BitmapFactory.decodeStream(instream);
+
+                        //resultPhotoBitmap = getRoundedCornerBitmap(resultPhotoBitmap, 20);
+                        profile.setImageBitmap(resultPhotoBitmap);
+
+                        instream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                }
+
         }
     }
 

@@ -54,9 +54,9 @@
                     android:scheme="kakaofc840073cb80861950802cae8d4b0237" />
             </intent-filter>
         </activity>
-
-        <!-- aws s3 -->
-        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService" android:enabled="true"/>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" /> <!-- 크롭 액티비티 -->
     </application>
 
 </manifest>

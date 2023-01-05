@@ -35,6 +35,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    aaptOptions{
+        noCompress"tflite"
+    }
 }
 
 dependencies {
@@ -55,6 +59,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage'   // Firebase Store
 
     implementation 'de.hdodenhof:circleimageview:3.1.0' // circleImageView
+
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+' // crop Image
+
+
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.4.0'
+    // Import the GPU delegate plugin Library for GPU inference
+    implementation 'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0'
 
     implementation("androidx.cardview:cardview:1.0.0")
     implementation 'androidx.core:core-ktx:1.7.0'
